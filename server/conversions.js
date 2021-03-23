@@ -41,31 +41,21 @@ class Conversions {
     } else if (notAllowed.some(char => str.toUpperCase().includes(char.toUpperCase()))) {
       result = "All characters may only include: IVXLCDM."
     } else {
-      const numArr = []
-
-      // loop over string
-      // check if char and next char in array
-      // push result to split array
-      // loop over split to sum numbers
+      result = 0
 
       for (let i = 0 ; i < str.length; i++) {
-        if (i < str.length - 1 && this.romanNumeral.includes(str.slice(i,i+2))) {
-          const chars = str.slice(i,i+2)
-          numArr.push(chars)
-          // const charIdx = this.romanNumeral.indexOf(chars)
-          // result += this.decimalValue[charIdx]
+        const chars = str.slice(i,i+2)
+        if (i < str.length - 1 && this.romanNumeral.includes(chars)) {
+          // numArr.push(chars)
+          const charIdx = this.romanNumeral.indexOf(chars)
+          result += this.decimalValue[charIdx]
           i++
         } else {
-          numArr.push(str[i])
-          // const charIdx = this.romanNumeral.indexOf(str[i])
-          // result += this.decimalValue[charIdx]
+          // numArr.push(str[i])
+          const charIdx = this.romanNumeral.indexOf(str[i])
+          result += this.decimalValue[charIdx]
         }
       }
-      // console.log(numArr)
-      result = numArr.reduce((acc, cur) => {
-        const dec = this.decimalValue[this.romanNumeral.indexOf(cur)]
-        return acc + dec
-      },0)
     }
 
     return result
