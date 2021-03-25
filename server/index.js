@@ -6,7 +6,7 @@ const cors = require('cors')
 const app = express()
 const PORT = process.env.PORT || 3001
 
-var corsOptions = {
+const corsOptions = {
   origin              : process.env.ORIGIN || 'http://localhost:3000',
   optionsSuccessStatus: 200 // For legacy browser support
 }
@@ -16,7 +16,6 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors(corsOptions))
 
-app.get('/',)
 
 app.get('/toRoman/:num', (req, res) => {
   const {num} = req.params

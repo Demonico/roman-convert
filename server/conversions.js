@@ -17,7 +17,7 @@ class Conversions {
   ]
 
   static toRomanNumeral(num) {
-    let result = ''
+
     if (Number.isNaN(Number.parseInt(num))) {
       throw new TypeError("Please only include integers.")
     } else if (num < 1) {
@@ -25,25 +25,26 @@ class Conversions {
     } else if (num >= 4000) {
       throw new RangeError('Number should be less than 4000.')
     } else {
+      let result = ''
       this.decimalValue.forEach( (decVal, idx) => {
         while(decVal <= num) {
           result += this.romanNumeral[idx]
           num -= decVal
         }
       })
+      return result
     }
-    return result
+
   }
 
   static toArabicNumeral(str) {
     const notAllowed = 'abefghjknopqrstuyz'.split("")
-    let result
     if (!Number.isNaN(Number.parseFloat(str))) {
       throw new TypeError("Numbers cannot be converted.")
     } else if (notAllowed.some(char => str.toUpperCase().includes(char.toUpperCase()))) {
       throw new RangeError("All characters may only include: IVXLCDM.")
     } else {
-      result = 0
+      let result = 0
 
       for (let i = 0 ; i < str.length; i++) {
         const chars = str.slice(i,i+2)
@@ -58,9 +59,11 @@ class Conversions {
           result += this.decimalValue[charIdx]
         }
       }
+
+      return result
     }
 
-    return result
+
   }
 
 }

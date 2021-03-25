@@ -5,7 +5,7 @@ const baseURL = process.env.CONVERSION_URL || 'http://localhost:3001'
 export async function getRoman(num) {
   const url = 'toRoman'
   const result = await axios.get(`${url}/${num}`, {
-    baseURL,
+    baseURL
   })
   return result.data
 }
@@ -13,7 +13,7 @@ export async function getRoman(num) {
 export async function getArabic(str) {
   const url = 'toArabic'
   const result = await axios.get(`${url}/${str}`, {
-    baseURL,
+    baseURL
   })
 
   return result.data
