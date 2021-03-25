@@ -3,21 +3,50 @@ import {Field, Form, Formik} from "formik";
 import {Alert, Button, Col, Row} from "reactstrap";
 import {ReactstrapInput} from "reactstrap-formik";
 
-import { getToArabic, getToRoman} from '../services/conversionsService';
+import { getArabic, getRoman} from '../services/conversionsService';
+
+function AlertHelper(color, message) {
+  const selectedColor = color ? "success" : "danger"
+  return <Alert color={selectedColor}>{message}</Alert>
+}
 
 export default function ConversionForm() {
-  const [roman, setRoman] = React.useState('')
-  const [arabic, setArabic] = React.useState('')
+  const [showRomanAlert, setShowRomanAlert] = React.useState(false)
+  const [showArabicAlert, setShowArabicAlert] = React.useState(false)
+  const [romanMessage, setRomanMessage] = React.useState('')
+  const [romanStatus, setRomanStatus] = React.useState(false)
+  const [arabicMessage, setArabicMessage] = React.useState('')
+  const [arabicStatus, setArabicStatus] = React.useState(false)
 
-  const handleSubmit = values => {
-    console.log(values)
-    const {toArabic, toRoman} = values
+  // React.useEffect(()=>{
+  //   if
+  // }, [showRomanAlert,showArabicAlert])
 
-    setArabic(getToArabic(toArabic))
-    setRoman(getToRoman(toRoman))
+  const handleSubmit = async values => {
+    const {toArabic = '', toRoman = ''} = values
+
+    if (toRoman !== '') {
+      const romanResponse = await getRoman(toRoman)
+      setRomanMessage(romanResponse.message)
+      setRomanStatus(romanResponse.success)
+      setShowRomanAlert(true)
+    } else {
+      setShowRomanAlert(false)
+    }
+
+    if (toArabic !== '') {
+      const arabicResponse = await getArabic(toArabic)
+      setArabicMessage(arabicResponse.message)
+      setArabicStatus(arabicResponse.success)
+      setShowArabicAlert(true)
+    } else {
+      setShowArabicAlert(false)
+    }
+
   }
 
   return (
+    <>
     <Formik
       initialValues={{toRoman: "", toArabic: ""}}
       onSubmit={handleSubmit}
@@ -31,7 +60,7 @@ export default function ConversionForm() {
               label="To Roman Numeral"
               component={ReactstrapInput}
             />
-            <Alert>{roman}</Alert>
+            {showRomanAlert && AlertHelper(romanStatus, romanMessage)}
           </Col >
           <Col xs="12" >
             <Field
@@ -40,7 +69,7 @@ export default function ConversionForm() {
               label="To Arabic Numeral"
               component={ReactstrapInput}
             />
-            <Alert>{arabic}</Alert>
+            {showArabicAlert && AlertHelper(arabicStatus, arabicMessage)}
           </Col >
           <Col xs="12" >
             <Button color="primary" type="submit" >Submit</Button >
@@ -48,5 +77,6 @@ export default function ConversionForm() {
         </Row >
       </Form >
     </Formik >
+    </>
   )
 }

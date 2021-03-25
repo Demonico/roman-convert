@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="App" >
       <Container >
-        <Jumbotron className="bg-info" >
+        <Jumbotron className="bg-secondary" >
           <h1 className="display-3" >Roman Convert</h1 >
         </Jumbotron >
         <Form />
@@ -13,6 +13,7 @@ function App() {
           <Col>
             <h2 className="display-4">Instructions</h2>
             <p>Enter values into one or both fields to see their conversions.</p>
+            <p>Note that Roman numerals range from 1 to 3999.</p>
           </Col>
         </Row>
       </Container >

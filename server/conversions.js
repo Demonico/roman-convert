@@ -18,7 +18,9 @@ class Conversions {
 
   static toRomanNumeral(num) {
     let result = ''
-    if (num < 1) {
+    if (Number.isNaN(Number.parseInt(num))) {
+      throw new TypeError("Please only include integers.")
+    } else if (num < 1) {
       throw new RangeError('Number should be greater than 1.')
     } else if (num >= 4000) {
       throw new RangeError('Number should be less than 4000.')
@@ -47,12 +49,12 @@ class Conversions {
         const chars = str.slice(i,i+2)
         if (i < str.length - 1 && this.romanNumeral.includes(chars)) {
           // numArr.push(chars)
-          const charIdx = this.romanNumeral.indexOf(chars)
+          const charIdx = this.romanNumeral.indexOf(chars.toUpperCase())
           result += this.decimalValue[charIdx]
           i++
         } else {
           // numArr.push(str[i])
-          const charIdx = this.romanNumeral.indexOf(str[i])
+          const charIdx = this.romanNumeral.indexOf(str[i].toUpperCase())
           result += this.decimalValue[charIdx]
         }
       }
