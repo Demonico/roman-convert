@@ -2,13 +2,21 @@ const conversions = require('./conversions')
 
 describe('Test toRomanNumeral', () => {
   it('should not allow negative numbers', () => {
-    const roman = conversions.toRomanNumeral(-1)
-    expect(roman).toBe('Number should be greater than 1.')
+    try {
+      conversions.toRomanNumeral(-1)
+    } catch (e) {
+      expect(e.message).toEqual('Number should be greater than 1.')
+    }
+
   })
 
   it('should not allow numbers greater than 3999', () => {
-    const roman = conversions.toRomanNumeral(4001)
-    expect(roman).toBe('Number should be less than 4000.')
+    try {
+      conversions.toRomanNumeral(4001)
+    } catch (e) {
+      expect(e.message).toBe('Number should be less than 4000.')
+    }
+
   })
 
   it('should format numbers correctly', () => {
@@ -30,22 +38,28 @@ describe('Test toRomanNumeral', () => {
 })
 
 describe('Test toArabicNumeral', () => {
-  it('should not accept numbers', function () {
-    const meaningOfLife = conversions.toArabicNumeral(42)
-    const pi = conversions.toArabicNumeral(3.14159)
-
-    expect(meaningOfLife).toBe("Numbers cannot be converted.")
-    expect(pi).toBe("Numbers cannot be converted.")
+  it('should not accept integers', () => {
+    try {
+      conversions.toArabicNumeral(42)
+    } catch (e) {
+      expect(e.message).toBe("Numbers cannot be converted.")
+    }
   })
 
-  it('should only accept specified characters', function () {
-    const a = conversions.toArabicNumeral('a')
-    const foo = conversions.toArabicNumeral('FOO')
-    const bar = conversions.toArabicNumeral('BAR')
+  it('should not accept floats', () => {
+    try {
+      conversions.toArabicNumeral(3.14159)
+    } catch (e) {
+      expect(e.message).toBe("Numbers cannot be converted.")
+    }
+  })
 
-    expect(a).toBe("All characters may only include: IVXLCDM.")
-    expect(foo).toBe("All characters may only include: IVXLCDM.")
-    expect(bar).toBe("All characters may only include: IVXLCDM.")
+  it('should only accept specified characters', () => {
+    try {
+      conversions.toArabicNumeral('vacation')
+    } catch (e) {
+      expect(e.message).toBe("All characters may only include: IVXLCDM.")
+    }
   })
 
   it('should format numbers correctly', () => {

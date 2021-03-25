@@ -19,9 +19,9 @@ class Conversions {
   static toRomanNumeral(num) {
     let result = ''
     if (num < 1) {
-      result = 'Number should be greater than 1.'
+      throw new RangeError('Number should be greater than 1.')
     } else if (num >= 4000) {
-      result = 'Number should be less than 4000.'
+      throw new RangeError('Number should be less than 4000.')
     } else {
       this.decimalValue.forEach( (decVal, idx) => {
         while(decVal <= num) {
@@ -37,9 +37,9 @@ class Conversions {
     const notAllowed = 'abefghjknopqrstuyz'.split("")
     let result
     if (!Number.isNaN(Number.parseFloat(str))) {
-      result = "Numbers cannot be converted."
+      throw new TypeError("Numbers cannot be converted.")
     } else if (notAllowed.some(char => str.toUpperCase().includes(char.toUpperCase()))) {
-      result = "All characters may only include: IVXLCDM."
+      throw new RangeError("All characters may only include: IVXLCDM.")
     } else {
       result = 0
 
